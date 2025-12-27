@@ -4,20 +4,14 @@
 :root {
   /* BD Perspective Colors */
   --color-bd-green: #006a4e;
-  /* Bangladesh Flag Green */
   --color-bd-red: #f42a41;
-  /* Bangladesh Flag Red (for errors/accents) */
 
   /* Professional FinTech Palette */
-  --color-bg: #f0f2f5;
-  /* Light Grey Background */
+  --color-bg: #f8fafc;
   --color-card: #ffffff;
-  /* White Cards */
-  --color-text-main: #1e293b;
-  /* Dark Slate for text */
+  --color-text-main: #0f172a;
   --color-text-muted: #64748b;
   --color-primary: var(--color-bd-green);
-  --color-accent: #38bdf8;
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -31,25 +25,39 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  /* Clean font for numbers/text */
   background-color: var(--color-bg);
   color: var(--color-text-main);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* --- Header Styling --- */
+/* =========================================
+   DESKTOP LAYOUT (Default: Top Header + Split View)
+   ========================================= */
+
+/* --- HEADER (Top Bar) --- */
 #header {
   text-align: center;
-  padding: 2rem 1rem 1rem;
-  background: white;
+  padding: 1.5rem 2rem;
+  background: var(--color-card);
   box-shadow: var(--shadow-sm);
   margin-bottom: 2rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #header img {
-  width: 4rem;
-  height: 4rem;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   margin-bottom: 0.5rem;
 }
@@ -60,7 +68,7 @@ body {
   color: var(--color-primary);
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 #header p {
@@ -69,32 +77,37 @@ body {
   margin-top: 0.25rem;
 }
 
-/* --- Main Layout (Responsive Dashboard) --- */
+/* --- MAIN CONTAINER (Grid Layout) --- */
 .main-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem 3rem;
+  padding: 0 2rem 3rem;
+
+  /* THIS CREATES THE SIDE-BY-SIDE LAYOUT */
   display: grid;
-  grid-template-columns: 350px 1fr;
-  /* Fixed Input, Flexible Result */
+  grid-template-columns: 380px 1fr;
+  /* Input fixed width | Result takes rest */
   gap: 2rem;
   align-items: start;
 }
 
-/* --- User Input Card --- */
+/* --- INPUT SECTION --- */
 #user-input {
   background: var(--color-card);
   padding: 2rem;
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e2e8f0;
   border-top: 5px solid var(--color-primary);
+  position: sticky;
+  top: 2rem;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 #user-input label {
@@ -122,20 +135,36 @@ body {
 #user-input input:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
-  /* Green Glow */
   background-color: white;
+  box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
 }
 
-/* --- Result Table --- */
+/* --- RESULT TABLE WRAPPER --- */
+/* This controls the scrolling for the table area */
+.result-section {
+  width: 100%;
+  min-width: 0;
+  /* CRITICAL: Allows flex/grid child to shrink below content size */
+  overflow-x: auto;
+  /* Adds horizontal scrollbar if content overflows */
+  border-radius: var(--radius);
+  border: 1px solid #e2e8f0;
+  box-shadow: var(--shadow-sm);
+  background: var(--color-card);
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scroll on iOS */
+}
+
 #result {
   width: 100%;
+  min-width: 600px;
+  /* Force table to be at least this wide to trigger scroll on small screens */
   border-collapse: separate;
   border-spacing: 0;
-  background: var(--color-card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
+  /* Styling is now on the wrapper (.result-section) to handle scroll cleanly */
+  background: transparent;
+  box-shadow: none;
+  border: none;
   animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -147,17 +176,8 @@ body {
 #result th, #result td {
   padding: 1rem;
   text-align: right;
-}
-
-#result th {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-#result tbody tr {
-  transition: background-color 0.2s;
+  white-space: nowrap;
+  /* CRITICAL: Forces text to stay on one line, triggering scroll */
 }
 
 #result tbody tr:nth-child(even) {
@@ -166,30 +186,18 @@ body {
 
 #result tbody tr:hover {
   background-color: #e2e8f0;
-  /* Hover effect */
 }
 
-#result td {
-  font-family: 'Inter', sans-serif;
-  color: var(--color-text-main);
-  font-size: 0.95rem;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.center {
-  text-align: center;
-}
-
+/* --- ERROR MESSAGE --- */
 .errorMessage {
+  text-align: center;
   color: var(--color-bd-red);
   background: #fef2f2;
   padding: 1rem;
-  border-radius: var(--radius);
+  border-radius: 8px;
   border: 1px solid #fecaca;
-  font-weight: 500;
 }
 
-/* --- Animations --- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -202,18 +210,26 @@ body {
   }
 }
 
-/* --- Responsive Design (Mobile) --- */
-@media (max-width: 900px) {
+/* =========================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+  /* 1. Stack the Grid (Top to Bottom) */
   .main-container {
     grid-template-columns: 1fr;
-    /* Stack vertically */
+    padding: 0 1.5rem 3rem;
   }
 
+  /* 2. Unstick the input so it flows naturally */
   #user-input {
+    position: static;
     max-width: 100%;
+
+    /* Make inputs sit side-by-side on tablet */
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* Inputs side-by-side on tablet */
     gap: 1.5rem;
   }
 
@@ -223,19 +239,25 @@ body {
 }
 
 @media (max-width: 600px) {
+
+  /* 3. Small Mobile Adjustments */
+  #header {
+    padding: 1.5rem 1rem;
+  }
+
+  .main-container {
+    padding: 0 1rem 2rem;
+  }
+
+  /* Stack inputs vertically again for phone */
   #user-input {
     grid-template-columns: 1fr;
-    /* Inputs stacked on small mobile */
+    padding: 1.5rem;
   }
 
-  #result {
-    display: block;
-    overflow-x: auto;
-    /* Scrollable table on mobile */
-    white-space: nowrap;
-  }
-
-  #header h1 {
-    font-size: 1.25rem;
+  /* Reduce padding in table for small screens */
+  #result th, #result td {
+    padding: 0.75rem;
+    font-size: 0.85rem;
   }
 }
