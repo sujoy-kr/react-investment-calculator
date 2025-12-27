@@ -1,0 +1,241 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap');
+
+:root {
+  /* BD Perspective Colors */
+  --color-bd-green: #006a4e;
+  /* Bangladesh Flag Green */
+  --color-bd-red: #f42a41;
+  /* Bangladesh Flag Red (for errors/accents) */
+
+  /* Professional FinTech Palette */
+  --color-bg: #f0f2f5;
+  /* Light Grey Background */
+  --color-card: #ffffff;
+  /* White Cards */
+  --color-text-main: #1e293b;
+  /* Dark Slate for text */
+  --color-text-muted: #64748b;
+  --color-primary: var(--color-bd-green);
+  --color-accent: #38bdf8;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  /* Clean font for numbers/text */
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Header Styling --- */
+#header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  background: white;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+#header img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+#header h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#header p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* --- Main Layout (Responsive Dashboard) --- */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  /* Fixed Input, Flexible Result */
+  gap: 2rem;
+  align-items: start;
+}
+
+/* --- User Input Card --- */
+#user-input {
+  background: var(--color-card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  border-top: 5px solid var(--color-primary);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#user-input label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+#user-input input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text-main);
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+#user-input input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 106, 78, 0.1);
+  /* Green Glow */
+  background-color: white;
+}
+
+/* --- Result Table --- */
+#result {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#result thead {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+#result th, #result td {
+  padding: 1rem;
+  text-align: right;
+}
+
+#result th {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+#result tbody tr {
+  transition: background-color 0.2s;
+}
+
+#result tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+#result tbody tr:hover {
+  background-color: #e2e8f0;
+  /* Hover effect */
+}
+
+#result td {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text-main);
+  font-size: 0.95rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.center {
+  text-align: center;
+}
+
+.errorMessage {
+  color: var(--color-bd-red);
+  background: #fef2f2;
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid #fecaca;
+  font-weight: 500;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive Design (Mobile) --- */
+@media (max-width: 900px) {
+  .main-container {
+    grid-template-columns: 1fr;
+    /* Stack vertically */
+  }
+
+  #user-input {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Inputs side-by-side on tablet */
+    gap: 1.5rem;
+  }
+
+  .input-group {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  #user-input {
+    grid-template-columns: 1fr;
+    /* Inputs stacked on small mobile */
+  }
+
+  #result {
+    display: block;
+    overflow-x: auto;
+    /* Scrollable table on mobile */
+    white-space: nowrap;
+  }
+
+  #header h1 {
+    font-size: 1.25rem;
+  }
+}
